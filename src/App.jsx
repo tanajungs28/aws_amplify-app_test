@@ -8,7 +8,7 @@ function App() {
   const [msg, setMsg] = useState("loading...")
 
   useEffect(() => {
-    fetch("https://xxxxx.execute-api.ap-northeast-1.amazonaws.com/hello") // 👈 API GatewayのInvoke URL + パス
+    fetch("https://za12cl7u0b.execute-api.ap-southeast-2.amazonaws.com/hello") // 👈 API GatewayのInvoke URL + パス
       .then(res => res.text())
       .then(setMsg)
       .catch(err => setMsg("Error: " + err))
