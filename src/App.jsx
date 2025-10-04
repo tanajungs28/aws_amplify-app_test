@@ -4,26 +4,55 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [msg, setMsg] = useState("まだ呼んでない");
+  const [msg, setMsg] = useState("");
 
-  async function callPost() {
-    const res = await fetch("https://za12cl7u0b.execute-api.ap-southeast-2.amazonaws.com/hello", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: "JUN" })
-    });
-    const data = await res.json();
-    setMsg(data.echo || JSON.stringify(data));
+  async function callBedrock() {
+    try {
+      const res = await fetch("https://750xq60j1d.execute-api.us-east-1.amazonaws.com/generate", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          name: "山田太郎",
+          traits: ["盛り上げ役", "カラオケ好き"]
+        })
+      });
+      const data = await res.json();
+      setMsg(data.copy || JSON.stringify(data));
+    } catch (e) {
+      setMsg("Error: " + e);
+    }
   }
 
   return (
     <>
-      <h1>API Test</h1>
-      <button onClick={callPost}>POSTで呼ぶ</button>
-      <p>Response: {msg}</p>
+      {/* 既存のVite+Reactの表示はそのままでOK */}
+      <button onClick={callBedrock} style={{marginTop:16}}>Bedrockで生成</button>
+      <p>Result: {msg}</p>
     </>
   );
 }
+
+// function App() {
+//   const [msg, setMsg] = useState("まだ呼んでない");
+
+//   async function callPost() {
+//     const res = await fetch("https://za12cl7u0b.execute-api.ap-southeast-2.amazonaws.com/hello", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ name: "JUN" })
+//     });
+//     const data = await res.json();
+//     setMsg(data.echo || JSON.stringify(data));
+//   }
+
+//   return (
+//     <>
+//       <h1>API Test</h1>
+//       <button onClick={callPost}>POSTで呼ぶ</button>
+//       <p>Response: {msg}</p>
+//     </>
+//   );
+// }
 
 // function App() {
 //   const [count, setCount] = useState(0)
