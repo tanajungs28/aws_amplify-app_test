@@ -9,9 +9,9 @@ function App() {
 
   useEffect(() => {
     fetch("https://za12cl7u0b.execute-api.ap-southeast-2.amazonaws.com/hello") // 👈 API GatewayのInvoke URL + パス
-      .then(res => res.text())
-      .then(setMsg)
-      .catch(err => setMsg("Error: " + err))
+    .then(res => res.json())
+    .then(data => setMsg(`${data.message}`))
+    .catch(err => setMsg("Error: " + err));
   }, [])
 
   return (
