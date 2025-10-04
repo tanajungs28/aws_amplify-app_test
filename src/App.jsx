@@ -1,10 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [msg, setMsg] = useState("loading...")
+
+  useEffect(() => {
+    fetch("https://xxxxx.execute-api.ap-northeast-1.amazonaws.com/hello") // 👈 API GatewayのInvoke URL + パス
+      .then(res => res.text())
+      .then(setMsg)
+      .catch(err => setMsg("Error: " + err))
+  }, [])
 
   return (
     <>
@@ -28,8 +36,10 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <p>
-        test write
+
+      {/* 👇 Lambdaから返ってきたメッセージを表示 */}
+      <p style={{ marginTop: "20px", color: "green" }}>
+        API Response: {msg}
       </p>
     </>
   )
